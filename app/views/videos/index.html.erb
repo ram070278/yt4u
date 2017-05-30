@@ -1,0 +1,88 @@
+
+<% if @videos.any? %>
+    <div class="container">
+      <h1>New Vidoes</h1>
+      <div class="bxslider">
+        <% @videos.each do |video| %>
+            <% if video %>
+                <div class="yt_video thumbnail slide">
+                  <%= image_tag "https://img.youtube.com/vi/#{video.uid}/mqdefault.jpg", alt: video.title,
+                                class: 'yt_preview img-rounded', :"data-uid" => video.uid %>
+                  <div class="caption">
+                    <p>Duration: <b><%= video.duration %></b></p>
+                    <h5><%= video.title %></h5>
+                  </div>
+                </div>
+            <% end %>
+        <% end %>
+      </div>
+    </div>
+
+
+
+    <div class="container">
+      <h1>Recent videos</h1>
+      <div class="DocumentList">
+        <ul class="list-inline">
+        <% @videos.each do |video| %>
+            <% if video %>
+
+                  <li class="DocumentItem">
+                    <div class="col-md-8">
+                      <div class="yt_video thumbnail">
+                        <%= image_tag "https://img.youtube.com/vi/#{video.uid}/mqdefault.jpg", alt: video.title,
+                                      class: 'yt_preview img-rounded', :"data-uid" => video.uid %>
+                        <div class="caption">
+                          <p>Duration: <b><%= video.duration %></b></p>
+                          <h5><%= video.title %></h5>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <div class="container">
+      <h1>Latest videos</h1>
+
+      <div id="player-wrapper"></div>
+      <br/>
+
+      <% @videos.in_groups_of(6) do |group| %>
+          <div class="row">
+            <% group.each do |video| %>
+                <% if video %>
+                    <div class="col-md-2">
+                      <div class="yt_video thumbnail">
+                        <%= image_tag "https://img.youtube.com/vi/#{video.uid}/mqdefault.jpg", alt: video.title,
+                                      class: 'yt_preview img-rounded', :"data-uid" => video.uid %>
+
+                        <div class="caption">
+                          <h5><%= video.title %></h5>
+                          <p>Author: <b><%= video.author %></b></p>
+                          <p>Duration: <b><%= video.duration %></b></p>
+                          <p>
+                            <span class="glyphicon glyphicon glyphicon-thumbs-up"></span> <%= video.likes %>
+                            <span class="glyphicon glyphicon glyphicon-thumbs-down"></span> <%= video.dislikes %>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                <% end %>
+            <% end %>
+          </div>
+      <% end %>
+    </div>
+<% end %>
+
+
+<div class="jumbotron">
+  <div class="container">
+    <p>
+      <%= link_to 'Add video now!', new_video_path, class: 'btn btn-primary btn-lg' %>
+    </p>
+  </div>
+</div>
